@@ -1,0 +1,27 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{graphutilz}[Provide fonction for graph, and graph algorithm]
+
+\RequirePackage{tikz,listofitems}
+
+\newcommand{\thetaoperator}[4]{
+  \ignoreemptyitems
+  \readlist\pred{#1,}
+  \readlist\succ{#3,}
+  \def\lenpred{\predlen}
+  \def\lensucc{\succlen}
+  \begin{tikzpicture}[#4]
+      \node at (0, 0) (0) {#2};
+      \ifnum\lenpred>0
+          \foreach \i in {1,...,\lenpred} {
+              \node at (-2, \i/2-\lenpred/4-0.25) (\i) {\pred[\i]};
+              \draw[->] (\i) -- (0);
+          }
+      \fi
+      \ifnum\lensucc>0
+          \foreach \j in {1,...,\lensucc} {
+              \node at (2, \j/2-\lensucc/4-0.25) (\j+\lenpred) {\succ[\j]};
+              \draw[->] (0) -- (\j+\lenpred);
+          }
+      \fi
+  \end{tikzpicture}
+}
